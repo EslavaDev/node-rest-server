@@ -15,7 +15,7 @@ app.use(express.static(`${__dirname}/public`));
 app.set('view engine', 'hbs');
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://localhost:27017/coffee', { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB, { useNewUrlParser: true })
   .then(() => {
     winston.info('Connected to Database Successfully');
     return app.listen(process.env.PORT, () => {
