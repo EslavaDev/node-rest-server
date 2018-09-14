@@ -1,42 +1,27 @@
 const express = require('express');
+const winston = require('winston');
+const mongoose = require('mongoose');
+// const hbs = require('hbs');
+const routeConfig = require('./routes');
 
 const app = express();
 require('./config');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+routeConfig(app);
 
-app.get('/user', (req, res) => {
-  res.json('get user');
-});
-app.post('/user', (req, res) => {
-  const { body } = req;
+app.use(express.static(`${__dirname}/public`));
+app.set('view engine', 'hbs');
 
-  if (!body.nombre) {
-    return res.status(400).json({
-      ok: false,
-      mensaje: 'el nombre es necesario',
+mongoose.set('useCreateIndex', true);
+mongoose.connect('mongodb://localhost:27017/coffee', { useNewUrlParser: true })
+  .then(() => {
+    winston.info('Connected to Database Successfully');
+    return app.listen(process.env.PORT, () => {
+      winston.info(`Example app listening on port ${process.env.PORT}!`);
     });
-  }
-  return res.status(201).json(
-    {
-      body: { ...body, ok: true },
-    },
-  );
-});
-app.put('/user/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id,
+  })
+  .catch((err) => {
+    if (err) throw err;
   });
-});
-app.delete('/user/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id,
-  });
-});
-
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}!`);
-});
