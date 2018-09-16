@@ -1,6 +1,7 @@
 const express = require('express');
 const winston = require('winston');
 const mongoose = require('mongoose');
+const path = require('path');
 // const hbs = require('hbs');
 const routeConfig = require('./routes');
 
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 routeConfig(app);
 
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.resolve(__dirname, '../public')));
 app.set('view engine', 'hbs');
 
 mongoose.set('useCreateIndex', true);

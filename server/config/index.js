@@ -25,6 +25,11 @@ process.env.EXP_TOKEN = process.env.EXP_TOKEN || 60 * 60 * 24 * 30;
 process.env.SEED_TOKEN = process.env.SEED_TOKEN || 'token_Super_Secret';
 
 // ======================
+//    Google CLIENTID
+// ======================
+process.env.CLIENT_ID = process.env.CLIENT_ID || '633492711856-pcka0g6op48ugs2or0t6pln9c5p3sqbn.apps.googleusercontent.com';
+
+// ======================
 //     Base de Datos
 // ======================
 let urlDB;
