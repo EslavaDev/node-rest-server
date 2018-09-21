@@ -2,11 +2,16 @@ const express = require('express');
 const winston = require('winston');
 const mongoose = require('mongoose');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 // const hbs = require('hbs');
 const routeConfig = require('./routes');
 
+
 const app = express();
 require('./config');
+
+// default options
+app.use(fileUpload());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

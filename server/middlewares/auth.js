@@ -6,7 +6,25 @@ exports.verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).json({
         ok: false,
-        err,
+        err: {
+          message: 'Token no valido',
+        },
+      });
+    }
+    req.user = decoded.user;
+    return next();
+  });
+};
+
+exports.verifyTokenQuery = (req, res, next) => {
+  const { token } = req.query;
+  jwt.verify(token, process.env.SEED_TOKEN, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({
+        ok: false,
+        err: {
+          message: 'Token no valido',
+        },
       });
     }
     req.user = decoded.user;
